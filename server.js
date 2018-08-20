@@ -7,10 +7,10 @@ const mongoose = require('mongoose');
 
 const passport = require('passport');
 
-//const userRoutes = require('./app/routes/user.routes.js');
-//const adminRoutes = require('./app/routes/admin.routes.js');
+const userRoutes = require('./app/routes/user.routes.js');
+const adminRoutes = require('./app/routes/admin.routes.js');
 
-//const auth = require('./services/auth');
+const auth = require('./services/auth');
 
 // create express app
 const app = express();
@@ -61,6 +61,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 require('./app/routes/message.routes.js')(app);
+require('./app/routes/category.routes.js')(app);
+require('./app/routes/auth.routes.js')(app);
+
+app.use('/user', passport.authenticate('jwt', { session : false }), userRoutes);
+app.use('/admin', passport.authenticate('jwt', { session : false }), auth.authAdmin, adminRoutes)
 
 // define a simple route
 app.get('/', (req, res) => {
@@ -68,7 +73,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, ip);
-
-console.log('Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
