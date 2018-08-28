@@ -14,7 +14,8 @@ exports.create = (req, res) => {
         title: req.body.title || "Untitled Message", 
         content: req.body.content || "No text for Message",
         date: req.body.date || "No date for Message",
-        link: req.body.link
+        link: req.body.link,
+        publishedAt: req.body.publishedAt
     });
     
     if(req.body.categoryId) message.categories.push(req.body.categoryId);
@@ -90,7 +91,8 @@ exports.update = (req, res) => {
         content: req.body.content || "No text for Message",
         date: req.body.date || "No date for Messsage",
         categoryId: req.body.categoryId,
-        link: req.body.link
+        link: req.body.link,
+        publishedAt: req.body.publishedAt
     }, {new: true})
     .then(message => {
         if(!message) {

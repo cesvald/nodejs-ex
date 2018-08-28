@@ -10,6 +10,7 @@ const MessageSchema = mongoose.Schema({
         type : String,
         required : false
     },
+    publishedAt: Date,
     categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }]
 }, {
     timestamps: true

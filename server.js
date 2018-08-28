@@ -65,7 +65,7 @@ require('./app/routes/category.routes.js')(app);
 require('./app/routes/auth.routes.js')(app);
 
 app.use('/user', passport.authenticate('jwt', { session : false }), userRoutes);
-app.use('/admin', passport.authenticate('jwt', { session : false }), auth.authAdmin, adminRoutes)
+app.use('/admin', passport.authenticate('jwt', { session : false }), auth.authAdmin, adminRoutes);
 
 // define a simple route
 app.get('/', (req, res) => {
