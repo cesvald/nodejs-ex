@@ -90,7 +90,6 @@ exports.update = (req, res) => {
         title: req.body.title || "Untitled Message",
         content: req.body.content || "No text for Message",
         date: req.body.date || "No date for Messsage",
-        categoryId: req.body.categoryId,
         link: req.body.link,
         publishedAt: req.body.publishedAt
     }, {new: true})
@@ -100,7 +99,15 @@ exports.update = (req, res) => {
                 message: "Message not found with id " + req.params.messageId
             });
         }
-        res.send(message);
+        if(req.body.categoryId) message.categories.push(req.body.categoryId);
+        message.save()
+        .then(data => {
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the Message."
+            });
+        });
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
