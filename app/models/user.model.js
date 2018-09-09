@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
-const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
   email : {
@@ -13,6 +13,10 @@ const UserSchema = new Schema({
     type : String,
     required : true
   },
+  refreshToken: {
+    type: String,
+    required: false
+  },
   messages: [{
       type: Schema.Types.ObjectId,
       ref: 'Message',
@@ -22,14 +26,8 @@ const UserSchema = new Schema({
     timestamps: true
 });
 
-UserSchema.pre('save', function(next){
-    const hash = bcrypt.hash(this.password, 10);
-    this.password = hash;
-    next();
-})
-
-UserSchema.methods.isValidPassword = function(password) {
-    const compare = bcrypt.compare(password, this.password);
+UserSchema.methods.isValidPassword = async function(password) {
+    const compare = await bcrypt.compare(password, this.password);
     return compare;
 }
 

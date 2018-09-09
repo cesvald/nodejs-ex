@@ -5,8 +5,6 @@ const router = express.Router();
 const messages = require('../controllers/message.controller.js');
 const categories = require('../controllers/category.controller.js');
 
-const auth = require('../../services/auth.js');
-
 // Create a new Message
 router.post('/messages', messages.create);
 // Update a Message with messageId

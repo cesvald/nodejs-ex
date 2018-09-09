@@ -43,7 +43,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 
 mongoose.Promise = global.Promise;
 
-mongoURL = process.env.MONGODB_URI;
+//mongoURL = process.env.MONGODB_URI;
 
 // Connecting to the database
 mongoose.connect(mongoURL)
